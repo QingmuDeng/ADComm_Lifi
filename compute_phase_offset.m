@@ -28,5 +28,5 @@ function [phi, f_delta, offset] = compute_phase_offset(rx, fs)
     % Find complex exponential to adjust for phase offset
     f_delta = fft_x(real(fft_y)==real_max)/4; % adjusts for clocks being unsynchronized
     k=1:length(rx);
-    offset=exp(-1i*(f_delta*(k-1)*1/fs+phi+pi/4));
+    offset=exp(-1i*(f_delta*(k-1)*1/fs+phi));
 end

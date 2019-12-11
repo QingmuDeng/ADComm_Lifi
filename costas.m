@@ -4,8 +4,9 @@ function x_hat = costas(rx)
 
     % Initialize Variables
     % alpha ~ beta/10
+    % alpha, beta < 1
     alpha = 0.05;
-    beta = 0.9;
+    beta = 0.8;
     psi_hat = 0;
     
     % y_bar[k]=y[k]/|h|
