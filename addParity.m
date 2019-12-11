@@ -7,7 +7,10 @@ if r>c
 end
 
 extra=mod(length(dat),4);
+
 seg_num=(length(dat)-extra)/4;
+
+extrabits=dat(end-(extra-1):end);
 
 if extra~=0
     dat=[dat zeros(1, extra)];
@@ -27,6 +30,6 @@ for m=1:seg_num
     
     parity=[parity temp];
 end
-
+parity=[parity extrabits];
 end
 
