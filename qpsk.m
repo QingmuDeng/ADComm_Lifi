@@ -9,7 +9,10 @@ rolloff = 0.5;
 pilot_sequence_len = 32;
 seed = 1;
 rrc = rcosdesign(rolloff,span,T, 'sqrt');
-startPos = find_signal_start(seed,pilot_sequence_len,T,rrc,read);
+startPos = find_signal_start(seed,pilot_sequence_len,T,rrc,read)
+if startPos == 0
+    startPos = 1;
+end
 
 %%
 read_shifted=read(startPos+pilot_sequence_len*T:end);
