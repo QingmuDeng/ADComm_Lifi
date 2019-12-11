@@ -1,4 +1,4 @@
-function startPos = find_signal_start(seed, len, T, rrc, rx)
+function [tx_start, startPos] = find_signal_start(seed, len, T, rrc, rx)
     % seed: seed for random number generator for creating pilot sequence
     % len: length of pilot sequence
     % T: symbol period
