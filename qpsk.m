@@ -1,9 +1,9 @@
+function [rx_ds, err_rate] = qpsk(txname, rxname, fileSize, pulseWidth, Fs)
 %%
 % Read in the received data
-rxname='rrc_pw50_3in_2Msampling.dat';
 read=read_usrp_data_file(rxname);
 
-T = 50; % Symbol Period
+T = pulseWidth; % Symbol Period
 span = 20;
 rolloff = 0.5;
 pilot_sequence_len = 32;
@@ -13,12 +13,11 @@ startPos = find_signal_start(seed,pilot_sequence_len,T,rrc,read);
 
 %%
 read_shifted=read(startPos+pilot_sequence_len*T:end);
-packet_length = (10000)*T;
+packet_length = fileSize*T;
 rx_st = read(startPos:startPos+pilot_sequence_len*T);
 signal_rx = conv(read_shifted(1:packet_length),rrc,'same');
 
 %%
-Fs = 2000000;
 [phi, f_delta, offset] = compute_phase_offset(signal_rx,Fs);
 read_offset=times(signal_rx,offset.');
 
@@ -30,7 +29,7 @@ xlabel('Real Component')
 ylabel('Imaginary Component')
 
 %%
-tx_data = read_usrp_data_file('tx_rrc2_pw50_down.dat');
+tx_data = read_usrp_data_file(txname);
 
 % Downsample TX signal to get original signal
 tx_pilot = tx_data(1:pilot_sequence_len*T);
