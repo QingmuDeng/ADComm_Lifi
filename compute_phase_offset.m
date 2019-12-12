@@ -26,9 +26,7 @@ function [phi, f_delta, offset] = compute_phase_offset(rx, fs)
 %         im_max = im_min;
 %     end
     
-    
-    real_max
-    im_max
+
     figure
     plot(fft_x,abs(fft_y))
     title('phase abs')
@@ -45,6 +43,5 @@ function [phi, f_delta, offset] = compute_phase_offset(rx, fs)
 %     f_delta = fft_x(real(fft_y)==real_max)/4; % adjusts for clocks being unsynchronized
     f_delta = fft_x(abs(fft_y)==abs_max)/4;
     k=1:length(rx);
-    phi
     offset=exp(-1i*(f_delta*(k-1)*1/fs+phi));%+pi/4));
 end
