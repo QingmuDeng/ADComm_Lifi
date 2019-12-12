@@ -7,6 +7,6 @@ function err = compute_qpsk_error(tx, rx)
     num_err_imag = length(find(error_imag~=0));
 
     % Sum errors and calculate error rate
-    err_total = num_err_real + num_err_imag;
+    err_total = num_err_real + num_err_imag
     err = err_total/(length(rx)*2);
 end

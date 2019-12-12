@@ -1,15 +1,17 @@
-function [rx_ds, err_rate] = qpsk(txname, rxname, T, Fs)
+function [rx_ds, err_rate] = qpsk(txname, rxname, T, Fs, packet_length)
 %%
 % Read in the received data
 read=read_usrp_data_file(rxname);
+% read=read(1:2919000);
 
 span = 20;
 rolloff = 0.5;
 pilot_sequence_len = 32;
-ending_sequence_len = 32;
+% ending_sequence_len = 32;
 seed = 1;
 rrc = rcosdesign(rolloff,span,T, 'sqrt');
-[tx_pilot startPos endPos] = find_signal_start(seed,pilot_sequence_len,ending_sequence_len,T,rrc,read)
+% [tx_pilot startPos endPos] = find_signal_start(seed,pilot_sequence_len,ending_sequence_len,T,rrc,read)
+[tx_pilot, startPos] = find_signal_start(seed,pilot_sequence_len,T,rrc,read)
 if startPos == 0
     startPos = 1;
 end
@@ -17,9 +19,9 @@ end
 %%
 read_shifted=read(startPos+pilot_sequence_len*T:end);
 %rx_pilot = read(startPos:startPos+pilot_sequence_len*T-1);
-packet_length = endPos - startPos - pilot_sequence_len*T;
+% packet_length = endPos - startPos - pilot_sequence_len*T;
 %rx_st = read(startPos:startPos+pilot_sequence_len*T);
-signal_rx = conv(read_shifted(1:packet_length),rrc,'same');
+signal_rx = conv(read_shifted(1:packet_length-pilot_sequence_len*T),rrc,'same');
 
 %%
 %
@@ -59,7 +61,8 @@ tx_data = read_usrp_data_file(txname);
 read_offset = times(signal_rx,offset.');
 % rx_costas = costas(signal_rx);
 % tx_pilot = tx_data(1:pilot_sequence_len*T);
-tx_data = tx_data(pilot_sequence_len*T:end-ending_sequence_len*T-1);
+% tx_data = tx_data(pilot_sequence_len*T:end-ending_sequence_len*T-1);
+tx_data = tx_data(pilot_sequence_len*T:end-1);
 tx_ds = downsample(tx_data,T);
 
 % Downsample RX signal
@@ -76,6 +79,6 @@ ylabel('Imaginary Component')
 figure;
 plot(real(rx_ds), imag(rx_ds),'.');
 
-length(tx_ds)
-length(rx_ds)
+tx_ds
+rx_ds
 err_rate = compute_qpsk_error(tx_ds, rx_ds);

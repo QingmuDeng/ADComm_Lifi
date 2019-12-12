@@ -1,4 +1,5 @@
-function [tx_start startPos endPos] = find_signal_start(seed, slen, elen, T, rrc, rx)
+function [tx_start, startPos] = find_signal_start(seed, slen, T, rrc, rx)
+% function [tx_start startPos endPos] = find_signal_start(seed, slen, elen, T, rrc, rx)
     % seed: seed for random number generator for creating pilot sequence
     % len: length of pilot sequence
     % T: symbol period
@@ -6,9 +7,9 @@ function [tx_start startPos endPos] = find_signal_start(seed, slen, elen, T, rrc
     % rx: raw received signal
     rng(seed);
     start_seq=sign(sign(randn(slen,1))+1i*sign(randn(slen,1)));
-    ending_seq=sign(sign(randn(elen,1))+1i*sign(randn(elen,1)));
+%     ending_seq=sign(sign(randn(elen,1))+1i*sign(randn(elen,1)));
     start_us=upsample(start_seq,T);
-    end_us=upsample(ending_seq,T);
+%     end_us=upsample(ending_seq,T);
 
     tx_start = conv(start_us, rrc, 'same');
 
@@ -16,6 +17,7 @@ function [tx_start startPos endPos] = find_signal_start(seed, slen, elen, T, rrc
     [r, lags]=xcorr(rx,tx_start);
 
     % Plot Cross-correlation
+    figure;
     plot(lags,abs(r))
     title('Cross Correlation of Rx and Tx Start')
     % xlim([-10^5 10^5])
@@ -25,20 +27,21 @@ function [tx_start startPos endPos] = find_signal_start(seed, slen, elen, T, rrc
     % This indicates where the signal begins
     startPos = abs(lags(abs(r) == max(abs(r))));
     
-    tx_end = conv(end_us, rrc, 'same');
+%     tx_end = conv(end_us, rrc, 'same');
 
     %Find cross-correlation of received and transmitted signals
-    [r, lags]=xcorr(rx,tx_end);
+%     [r, lags]=xcorr(rx,tx_end);
 
     % Plot Cross-correlation
-    plot(lags,abs(r))
-    title('Cross Correlation of Rx and Tx End')
+%     figure;
+%     plot(lags,abs(r))
+%     title('Cross Correlation of Rx and Tx End')
     % xlim([-10^5 10^5])
     % ylim([-.2 .2])
 
     % Find the lag where the cross-correlation of rx/tx is greatest
     % This indicates where the signal begins
-    endPos = abs(lags(abs(r) == max(abs(r))));
+%     endPos = abs(lags(abs(r) == max(abs(r))));
     
     
     
