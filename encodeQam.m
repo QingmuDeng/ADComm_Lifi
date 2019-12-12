@@ -8,7 +8,7 @@ if r<c
 end
 
 if mod(length(bitArray),2)~=0
-    bitArray=[bitArray.' 0.'];
+    bitArray=[bitArray.' 0.'].';
 end
 length(bitArray);
 encoding=zeros(length(bitArray)/2,1);

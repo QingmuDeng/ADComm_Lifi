@@ -1,19 +1,24 @@
-function [rx_ds, err_rate] = qpsk(txname, rxname, fileSize, T, rrc, Fs, pilot_sequence_len)
+function [rx_ds, err_rate] = qpsk(txname, rxname, T, Fs)
 %%
 % Read in the received data
 read=read_usrp_data_file(rxname);
 
+span = 20;
+rolloff = 0.5;
+pilot_sequence_len = 32;
+ending_sequence_len = 32;
 seed = 1;
-[tx_pilot, startPos] = find_signal_start(seed,pilot_sequence_len,T,rrc,read);
-disp(["Start Position: ", startPos]);
+rrc = rcosdesign(rolloff,span,T, 'sqrt');
+[tx_pilot startPos endPos] = find_signal_start(seed,pilot_sequence_len,ending_sequence_len,T,rrc,read)
 if startPos == 0
     startPos = 1;
 end
 
 %%
 read_shifted=read(startPos+pilot_sequence_len*T:end);
-packet_length = fileSize*T;
-rx_pilot = read(startPos:startPos+pilot_sequence_len*T-1);
+%rx_pilot = read(startPos:startPos+pilot_sequence_len*T-1);
+packet_length = endPos - startPos - pilot_sequence_len*T;
+%rx_st = read(startPos:startPos+pilot_sequence_len*T);
 signal_rx = conv(read_shifted(1:packet_length),rrc,'same');
 
 %%
@@ -21,10 +26,10 @@ signal_rx = conv(read_shifted(1:packet_length),rrc,'same');
 tx_data = read_usrp_data_file(txname);
 
 % Downsample TX signal to get original signal
-tx_pilot = downsample(conv(tx_data(1:pilot_sequence_len*T),rrc,'same'),T);
-tx_data = tx_data(pilot_sequence_len*T:end-1);
-tx_conv = conv(tx_data,rrc,'same');
-tx_ds = downsample(tx_conv,T);
+% tx_pilot = downsample(conv(tx_data(1:pilot_sequence_len*T),rrc,'same'),T);
+% tx_data = tx_data(pilot_sequence_len*T:end-1);
+% tx_conv = conv(tx_data,rrc,'same');
+% tx_ds = downsample(tx_conv,T);
 
 % manual_phase_offsets = linspace(0, 2*pi, 16);
 % best_phase = 0;
@@ -53,6 +58,9 @@ tx_ds = downsample(tx_conv,T);
 % read_offset=times(signal_rx,final_offset.');
 read_offset = times(signal_rx,offset.');
 % rx_costas = costas(signal_rx);
+% tx_pilot = tx_data(1:pilot_sequence_len*T);
+tx_data = tx_data(pilot_sequence_len*T:end-ending_sequence_len*T-1);
+tx_ds = downsample(tx_data,T);
 
 % Downsample RX signal
 % rx_ds = downsample(rx_costas,T);
@@ -66,5 +74,8 @@ xlabel('Real Component')
 ylabel('Imaginary Component')
 % err_rate = "HAHA";
 figure;
-plot(real(rx_ds), imag(rx_ds),'.')
+plot(real(rx_ds), imag(rx_ds),'.');
+
+length(tx_ds)
+length(rx_ds)
 err_rate = compute_qpsk_error(tx_ds, rx_ds);
