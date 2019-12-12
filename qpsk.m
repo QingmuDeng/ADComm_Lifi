@@ -2,6 +2,7 @@ function [rx_ds, err_rate] = qpsk(txname, rxname, T, Fs)
 %%
 % Read in the received data
 read=read_usrp_data_file(rxname);
+read=read(500:2000000);
 
 span = 20;
 rolloff = 0.5;
@@ -13,8 +14,12 @@ rrc = rcosdesign(rolloff,span,T, 'sqrt');
 if startPos == 0
     startPos = 1;
 end
-
+% startPos=113176;
+startPos
 %%
+rx_pilot=read(startPos:startPos+pilot_sequence_len*T-1)
+a=sign(rx_pilot)./sign(tx_pilot)
+diff=angle(sum(a.')/length(a))
 read_shifted=read(startPos+pilot_sequence_len*T:end);
 %rx_pilot = read(startPos:startPos+pilot_sequence_len*T-1);
 packet_length = endPos - startPos - pilot_sequence_len*T;
@@ -38,7 +43,7 @@ tx_data = read_usrp_data_file(txname);
 % pilot_offset = rx_pilot ./ tx_pilot
 % pilot_offset
 
-[phi, f_delta, offset] = compute_phase_offset(signal_rx,Fs);
+[phi, f_delta, offset] = compute_phase_offset(signal_rx,Fs,diff);
 
 % rx_pilot
 % for phase = 1:length(manual_phase_offsets)
