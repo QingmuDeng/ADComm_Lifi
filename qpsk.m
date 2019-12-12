@@ -2,6 +2,7 @@ function [rx_ds, err_rate] = qpsk(txname, rxname, T, Fs, packet_length)
 %%
 % Read in the received data
 read=read_usrp_data_file(rxname);
+read=read(1000:end);
 
 span = 20;
 rolloff = 0.5;
@@ -24,7 +25,22 @@ read_shifted=read(startPos+pilot_sequence_len*T:end);
 %rx_pilot = read(startPos:startPos+pilot_sequence_len*T-1);
 % packet_length = endPos - startPos - pilot_sequence_len*T;
 %rx_st = read(startPos:startPos+pilot_sequence_len*T);
-signal_rx = conv(read_shifted(1:packet_length-pilot_sequence_len*T),rrc,'same');
+if packet_length-pilot_sequence_len*T > length(read_shifted)
+    [tx_pilot, startPos] = find_signal_start(seed,pilot_sequence_len,T,rrc,read(1:startPos-1000))
+    if startPos == 0
+        startPos = 1;
+    end
+    % startPos=113176;
+    startPos
+    
+    rx_pilot=read(startPos:startPos+pilot_sequence_len*T-1)
+    a=sign(rx_pilot)./sign(tx_pilot)
+    diff=angle(sum(a.')/length(a))
+    read_shifted=read(startPos+pilot_sequence_len*T:end);
+    signal_rx = conv(read_shifted(1:packet_length-pilot_sequence_len*T),rrc,'same');
+else
+    signal_rx = conv(read_shifted(1:packet_length-pilot_sequence_len*T),rrc,'same');
+end
 
 %%
 %
@@ -61,10 +77,21 @@ tx_data = read_usrp_data_file(txname);
 % best_phase
 % final_offset = time(offset,exp(best_phase));
 % read_offset=times(signal_rx,final_offset.');
-read_offset = times(signal_rx,offset.');
+% read_offset = times(signal_rx,offset.');
 % rx_costas = costas(signal_rx);
 % tx_pilot = tx_data(1:pilot_sequence_len*T);
 % tx_data = tx_data(pilot_sequence_len*T:end-ending_sequence_len*T-1);
+
+read_offset = times(signal_rx,offset.');
+phase=[pi/4 3*pi/4 pi/2 -pi/2 -3*pi/4 -pi/4];
+pilot_err=zeros(1, length(phase));
+for m=1:length(phase)
+    temp_pilot=rx_pilot*exp(-1j*(phi+phase(m)));
+    pilot_err(m)=compute_qpsk_error(tx_pilot,temp_pilot);    
+end
+err_min = min(pilot_err);
+read_offset=read_offset*exp(-1j*(phase(pilot_err==err_min)));
+
 tx_data = tx_data(pilot_sequence_len*T:end-1);
 tx_ds = downsample(tx_data,T);
 
