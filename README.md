@@ -19,6 +19,9 @@ The two images we transmitted are located below. While any image can be processe
 #### Warnings
 Due to some of our received data files having a relatively high error rate, you may have to specify the row width of the received image in order to properly transform `rxname.dat` into an image.
 
+### Transmitting and Receiving
+We used  the `gnuradio-companion` gui in Ubuntu to read and write `.dat` and communicate with USRPs to transmit and receive the data. These data files, however, should work on most USRP systems and accompanying software.
+
 ## Setup
 The physical setup of our project can be seen below. For this lab we used a standard LED bulb you could find at any department store, an avalanche photodetector and low pass filter from ThorLabs, a voltage bias and signal amplifier to move the signal into a linear regime acceptable for the lightbulb, and two USRPs to transmit and receive our `.dat` over a QPSK signal.
 
