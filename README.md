@@ -9,13 +9,20 @@ This repository contains all of the code we used to turn an image into a **4-QAM
 ### Processing an Image
 All of the image conversion code is found in `ImageQAM.mlx`. Running the tx generation portion of the code will generate a file  `txname.dat` that is ready to transmit over light via gnuradio. Running the rx processing code will look for a file `rxname.dat` and convert that image into a black and white image.
 
+#### Images
+The two images we transmitted are located below. While any image can be processed by our code, we recommend using smaller images to keep them within the `200,000` bit data limit.
+
+![einstein](pics/einstein.jpg)
+
+![checkerboard](pics/checkerboard.jpg)
+
 #### Warnings
 Due to some of our received data files having a relatively high error rate, you may have to specify the row width of the received image in order to properly transform `rxname.dat` into an image.
 
 ## Setup
-The physical setup of our project can be seen below.
+The physical setup of our project can be seen below. For this lab we used a standard LED bulb you could find at any department store, an avalanche photodetector and low pass filter from ThorLabs, a voltage bias and signal amplifier to move the signal into a linear regime acceptable for the lightbulb, and two USRPs to transmit and receive our `.dat` over a QPSK signal.
 
-![setup](\pics\setup.png)
+![setup](pics/setup.jpg)
 
 
 
