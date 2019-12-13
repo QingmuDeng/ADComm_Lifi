@@ -1,9 +1,9 @@
 # Introduction to Analog and Digital Final Project, Fall 2019
+#### By [Daniel Connolly](https://github.com/djconnolly27), [William Fairman](https://github.com/wFairmanOlin), and [Qingmu Deng](https://github.com/QingmuDeng)
 
 ## Wireless Communication with Indoor LED Lightblub
 The discovery of high frequency switchings of commercial LED lightbulbs offers a new approach to wireless communication through visible light. In this project we aimed to transmit photos through LED lightbulbs over distance comparable to that of a desktop lamp. Over the course of the project, we ended up producing a wireless system that in the end was able to transmit a `200,000 bit` data packet over a `25in` distance with `2%` accuracy. Our final report can be found [here](ADC_Final_Report_Connolly_Fairman_Deng.pdf).
 
-### By [Daniel Connolly](https://github.com/djconnolly27), [William Fairman](https://github.com/wFairmanOlin), and [Qingmu Deng](https://github.com/QingmuDeng)
 
 ## Code Description
 This repository contains all of the code we used to turn an image into a **4-QAM data packet** as well as turning received data back into an image. The repository also contains examples of transmitted and received data packets located in `\data\`. These files are stored in a binary `.dat` format.
