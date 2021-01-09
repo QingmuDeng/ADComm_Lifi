@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Verti by HTML5 UP</title>
+		<title>Qingmu Deng PortLight Fidelity</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -20,15 +20,15 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="port.html">Portfolio</a></h1>
-								<span>of Qingmu Deng</span>
+								<h1><a href="port.html">LiFi</a></h1>
+								<span>Introduction to Analog and Digital Communications Final Project</span>
 							</div>
 
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li class="current"><a href="port.html">Welcome</a></li>
-									<li><a href="index.html">Homepage</a></li>
+									<!-- <li class="current"><a href="index.html">Welcome</a></li>
+									<li><a href="index.html">Homepage</a></li> -->
 								</ul>
 							</nav>
 
@@ -44,25 +44,27 @@
 
 									<!-- Sidebar -->
 										<section>
-											<h3>Subheading</h3>
-											<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-											Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-											Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-											consequat etiam.</p>
-											<footer>
+											<h3>Project Summary</h3>
+											<p>The discovery of high frequency switchings of commercial LED lightbulbs offers 
+											 a new approach to wireless communication through visible light. In this project we
+											 aimed to transmit photos through LED lightbulbs over distance comparable to that of
+											 a desktop lamp. Over the course of the project, we ended up producing a wireless system
+											  that in the end was able to transmit a 200,000 bit data packet over a 25-inch distance with
+											 2% accuracy.</p>
+											<!-- <footer>
 												<a href="#" class="button icon solid fa-info-circle">Find out more</a>
-											</footer>
+											</footer> -->
 										</section>
 
 										<section>
-											<h3>Subheading</h3>
+											<h3>Related Links</h3>
 											<ul class="style2">
-												<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-												<li><a href="#">Ornare in hendrerit in lectus</a></li>
-												<li><a href="#">Semper mod quis eget mi dolore</a></li>
-												<li><a href="#">Quam turpis feugiat sit dolor</a></li>
-												<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
-												<li><a href="#">Semper mod quisturpis nisi</a></li>
+												<li><a href="https://github.com/QingmuDeng/ADComm_Lifi">Project Github</a></li>
+												<li><a href="../ADC_Final_Report_Connolly_Fairman_Deng.pdf">Project Report</a></li>
+												<li><a href="../Lifi_presentation.pdf">Project Presentation</a></li>
+												<li><a href="http://www.willfairman.com/">William Fairman</a></li>
+												<li><a href="https://djconnolly27.github.io/">Daniel Connolly</a></li>
+												<li><a href="https://qingmudeng.github.io/">Qingmu Deng</a></li>
 											</ul>
 										</section>
 
@@ -74,29 +76,31 @@
 									<!-- Content -->
 										<article>
 
-											<h2>Left Sidebar</h2>
+											<h2>Wireless Communication through Light-Emitting-Diode Lightbulbs</h2>
+											<p></p>
+											<p>We exploited the orthogonality of sine and cosine functions and encoded our information
+												to be transmitted in the quadrature amplitude modulation (QAM).
+											</p>
+											<a href="#" class="image featured"><img src="images/qam_block.PNG" alt="" /></a>
+											<!-- <br> -->
+											<p>Our physical system was set up in such a way that a laptop on the transmitting end passed the encoded information 
+												through a Universal Serial Radio Peripheral and an amplifier to apply the corresponding voltage
+												bias to drive the LED. On the receiving end, a photodiode produced a voltage output in response to the 
+												LED switching. The voltage signal is passed through another USRP and back to another laptop.
+											</p>
+											<a href="#" class="image featured"><img src="images/system_block.png" alt="" /></a>
+											<p> Our software pipeline consists of 1) image processing to convert a colored image to greyscale and 2) data preparation,
+												 including encoding and error-correcting and pilot bits addition, to get their data ready to send. The pipeline on the
+												 receiving end is similar but done in the reverse order.
+											</p>
+											<a href="#" class="image featured"><img src="images/tx_rx_blocks.png" alt="" /></a>
+											<p> Our best result transmitted over 25 inches is shown below. It has an error rate of just under 2%.
+											</p>
+											<a href="#" class="image featured"><img src="images/einstein_robust_pilot.png" alt="" /></a>
+											To attest to the usefulness of LiFi, we produced the following video detailing our LiFi story.</p>
+											<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/TNK1LMGcHHc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-											<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-											Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-											Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-											consequat etiam lorem ipsum dolor sit amet nullam.</p>
-
-											<h3>More intriguing information</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-											justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-											ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-											vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-											Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-											rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-											Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-											Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
-
-											<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim
-											quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu.
-											Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-											fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-											Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-											Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+											<p>You can read about our project in details on the related link on the left.</p>
 
 										</article>
 
@@ -107,7 +111,7 @@
 				</div>
 
 			<!-- Footer -->
-				<div id="footer-wrapper">
+				<!-- <div id="footer-wrapper"> -->
 					<footer id="footer" class="container">
 						<div class="row">
 							<div class="col-12">
@@ -119,7 +123,7 @@
 							</div>
 						</div>
 					</footer>
-				</div>
+				<!-- </div> -->
 
 			</div>
 
